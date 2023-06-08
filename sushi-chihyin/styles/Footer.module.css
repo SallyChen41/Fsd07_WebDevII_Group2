@@ -1,0 +1,60 @@
+.container {
+  /* height: calc(100vh - 100px); */
+  /* background-color: #222222b3; */
+  display: flex;
+  margin: 10px 20px;
+}
+
+.item {
+  flex: content;
+  position: relative;
+  display: flex;
+  padding: 3% 3%;
+}
+
+/* .item:last-child {
+  flex: 2;
+  padding: 50px;
+  justify-content: space-between;
+} */
+
+.card {
+  flex: 1;
+  padding: 0 20px;
+}
+
+.title {
+  font-size: 18px;
+  color: #b7903c;
+}
+
+/* .text {
+  color: lightgray;
+} */
+
+.icon {
+  font-size: 10px;
+  /* color: lightgray; */
+}
+
+@media screen and (max-width: 480px) {
+  .container {
+    height: auto;
+    text-align: center;
+  }
+  .item:first-child {
+    display: none;
+  }
+
+  .item {
+    flex-direction: column;
+  }
+
+  .title {
+    font-size: 30px;
+  }
+
+  .text {
+    font-size: 20px;
+  }
+}
