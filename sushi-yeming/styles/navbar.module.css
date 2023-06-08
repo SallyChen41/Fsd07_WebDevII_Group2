@@ -5,3 +5,7 @@
 .navLink:hover {
   text-decoration: none !important;
 }
+
+.nav-link.logout {
+  background-color: transparent;
+}
