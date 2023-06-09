@@ -57,6 +57,14 @@
   margin-top: 20px;
 }
 
+.notification {
+  background-color: #52c41a;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+
 @media screen and (max-width: 480px) {
   .container {
     flex-direction: column;
