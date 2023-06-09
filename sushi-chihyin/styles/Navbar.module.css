@@ -1,0 +1,80 @@
+.container {
+  height: 100px;
+  padding: 0px 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* position: sticky; */
+  top: 0;
+  z-index: 999;
+}
+
+.item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.item:nth-child(2) {
+  flex: 3;
+}
+
+.item:last-child {
+  justify-content: flex-end;
+}
+
+.list {
+  padding: 0;
+  display: flex;
+  align-items: center;
+  list-style: none;
+  color: black;
+}
+
+.listItem {
+  margin: 20px;
+  font-weight: 500;
+}
+
+.cart{
+  position: relative;
+}
+
+.counter {
+  /* ... */
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pulse 1s infinite; /* Add animation for the counter */
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media screen and (max-width:480px) {
+  .item:nth-child(2) {
+    display: none;
+  }
+
+  .item:nth-child(1) {
+    flex: 3;
+  }
+}

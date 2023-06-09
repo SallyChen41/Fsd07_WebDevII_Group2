@@ -1,0 +1,159 @@
+.container {
+  height: calc(100vh - 100px);
+  display: flex;
+  margin-top: -3.5rem;
+  margin-bottom: -3.5rem;
+}
+
+.notification {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #d1411e;
+  color: white;
+  padding: 10px;
+  font-size: 16px;
+  text-align: center;
+  transition: transform 0.3s ease;
+  transform: translateY(-100%);
+}
+
+.container:hover .notification {
+  transform: translateY(0%);
+}
+
+.left {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.right {
+  flex: 1;
+  padding: 20px;
+  margin-top: 6rem;
+}
+
+.imgContainer {
+  width: 50%;
+  height: 70%;
+  position: relative;
+  margin-top: 10rem;
+  margin-left: 10rem;
+}
+
+.price {
+  color: #d1411e;
+  font-size: 24px;
+  font-weight: 400;
+  border-bottom: 1px solid #d1411e;
+}
+
+.fish {
+  width: 40%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.fish {
+  width: 30px;
+  height: 30px;
+  position: relative;
+  cursor: pointer;
+}
+
+.ingredients {
+  display: flex;
+  margin-bottom: 30px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.checkbox {
+  width: 20px;
+  height: 20px;
+}
+
+.quantity {
+  width: 50px;
+  height: 30px;
+}
+
+.button {
+  height: 30px;
+  margin-left: 10px;
+  background-color: #d1411e;
+  color: white;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.backLink {
+  margin-top: 1.5rem;
+}
+
+.backLink a {
+  display: inline-block;
+  font-size: 0.8rem;
+  color: #333;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.backLink a:hover {
+  color: #777;
+}
+
+
+@media screen and (max-width: 480px) {
+  .container {
+    height: auto;
+    text-align: center;
+    flex-direction: column;
+    margin-top: 20px;
+  }
+
+  .imgContainer {
+    width: 70vw;
+    height: 70vw;
+  }
+
+  .title {
+    margin: 5px;
+  }
+
+  .fish {
+    width: 100%;
+    padding: 0px 20px;
+  }
+
+  .ingredients {
+    flex-direction: column;
+  }
+
+  .option {
+    margin: 10px;
+    font-size: 18px;
+  }
+
+  .checkbox {
+    width: 25px;
+    height: 25px;
+  }
+
+  .quantity,
+  .button {
+    height: 50px;
+    padding: 10px 20px;
+  }
+}
