@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 import { useRouter } from "next/router";
 import { auth } from "../config/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";

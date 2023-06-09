@@ -1,18 +1,20 @@
-import Footer from "@/components/footer";
-import NavBar from "@/components/navbar";
+import styles from "../styles/Home.module.css";
 import Head from "next/head";
+import Featured from "../components/Featured";
+import ProductList from "../components/ProductList";
 
 const HomePage = () => {
   return (
-    <>
+    <div className={styles.container}>
       <Head>
         <title>Sushi Website - Home</title>
+        <meta name="description" content="My Sushi Website" />
+
+        <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div>
-        <h1>Welcome to our Sushi Website!</h1>
-        <p>Explore our delicious sushi menu and enjoy the best flavors.</p>
-      </div>
-    </>
+      <Featured />
+      <ProductList />
+    </div>
   );
 };
 
