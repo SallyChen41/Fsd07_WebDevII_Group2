@@ -6,35 +6,47 @@ import Link from 'next/link';
 
 const Item = () => {
   const { addItemToCart } = useContext(cartContext);
-  const [selectedFish, setSelectedFish] = useState(0);
   const [isItemAdded, setIsItemAdded] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [extras, setExtras] = useState([]);
 
   const sushi = {
     id: 1,
-    img: ['/img/toro.PNG', '/img/sake.PNG', '/img/ebi.PNG'],
-    name: ['TUNA NIGIRI', 'SALMON NIGIRI', 'SHRIMP NIGIRI'],
-    price: [4.99, 4.99, 3.99],
+    img: "/img/toro.PNG",
+    name: "TUNA NIGIRI",
+    price: 4.99,
   };
 
-  const handleFishChange = (event) => {
-    setSelectedFish(Number(event.target.value));
+  const handleSoySauceChange = (event) => {
+    if (event.target.checked) {
+      setExtras((prevExtras) => [...prevExtras, "Soy Sauce"]);
+    } else {
+      setExtras((prevExtras) => prevExtras.filter((extra) => extra !== "Soy Sauce"));
+    }
   };
 
-  const handleExtrasChange = (event) => {
-    const selectedExtras = Array.from(event.target.options)
-      .filter((option) => option.selected)
-      .map((option) => option.value);
-    setExtras(selectedExtras);
+  const handleWasabiChange = (event) => {
+    if (event.target.checked) {
+      setExtras((prevExtras) => [...prevExtras, "Wasabi"]);
+    } else {
+      setExtras((prevExtras) => prevExtras.filter((extra) => extra !== "Wasabi"));
+    }
+  };
+
+  const handleGingerChange = (event) => {
+    if (event.target.checked) {
+      setExtras((prevExtras) => [...prevExtras, "Ginger"]);
+    } else {
+      setExtras((prevExtras) => prevExtras.filter((extra) => extra !== "Ginger"));
+    }
   };
 
   const handleAddToCart = () => {
     const selectedSushi = {
       id: sushi.id,
-      img: sushi.img[selectedFish],
-      name: sushi.name[selectedFish],
-      price: sushi.price[selectedFish],
+      img: sushi.img,
+      name: sushi.name,
+      price: sushi.price,
       extras: extras,
       quantity: quantity,
     };
@@ -45,51 +57,15 @@ const Item = () => {
 
   return (
     <div className={styles.container}>
-      {isItemAdded && <div className={styles.notification}>Item added!</div>}
+      {isItemAdded && <div className={styles.notification}>Item added to the cart!</div>}
       <div className={styles.left}>
         <div className={styles.imgContainer}>
-          <Image src={sushi.img[selectedFish]} width={300} height={300} objectFit="contain" alt="" />
+          <Image src={sushi.img} width={300} height={300} objectFit="contain" alt="" />
         </div>
       </div>
       <div className={styles.right}>
-        <h1 className={styles.title}>{sushi.name[selectedFish]}</h1>
-        <span className={styles.price}>${sushi.price[selectedFish]}</span>
-        <h3 className={styles.choose}>Find your taste</h3>
-        <div className={styles.fish}>
-          <div className={styles.option}>
-            <input
-              type="radio"
-              id="tuna"
-              name="fish"
-              value={0}
-              checked={selectedFish === 0}
-              onChange={handleFishChange}
-            />
-            <label htmlFor="tuna">TUNA</label>
-          </div>
-          <div className={styles.option}>
-            <input
-              type="radio"
-              id="salmon"
-              name="fish"
-              value={1}
-              checked={selectedFish === 1}
-              onChange={handleFishChange}
-            />
-            <label htmlFor="salmon">SALMON</label>
-          </div>
-          <div className={styles.option}>
-            <input
-              type="radio"
-              id="shrimp"
-              name="fish"
-              value={2}
-              checked={selectedFish === 2}
-              onChange={handleFishChange}
-            />
-            <label htmlFor="shrimp">SHRIMP</label>
-          </div>
-        </div>
+        <h1 className={styles.title}>{sushi.name}</h1>
+        <span className={styles.price}>${sushi.price}</span>
         <h3 className={styles.choose}>Optional</h3>
         <div className={styles.ingredients}>
           <div className={styles.option}>
@@ -98,6 +74,7 @@ const Item = () => {
               type="checkbox"
               id="soy-sauce"
               name="soy-sauce"
+              onChange={handleSoySauceChange}
             />
             <label htmlFor="soy-sauce">Extra Soy Sauce</label>
           </div>
@@ -107,6 +84,7 @@ const Item = () => {
               type="checkbox"
               id="wasabi"
               name="wasabi"
+              onChange={handleWasabiChange}
             />
             <label htmlFor="wasabi">Wasabi</label>
           </div>
@@ -116,6 +94,7 @@ const Item = () => {
               type="checkbox"
               id="ginger"
               name="ginger"
+              onChange={handleGingerChange}
             />
             <label htmlFor="ginger">Ginger</label>
           </div>

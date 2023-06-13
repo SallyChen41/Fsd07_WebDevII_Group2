@@ -49,20 +49,6 @@
   color: #d1411e;
   font-size: 24px;
   font-weight: 400;
-  border-bottom: 1px solid #d1411e;
-}
-
-.fish {
-  width: 40%;
-  display: flex;
-  justify-content: space-between;
-}
-
-.fish {
-  width: 30px;
-  height: 30px;
-  position: relative;
-  cursor: pointer;
 }
 
 .ingredients {
