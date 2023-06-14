@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from '../styles/SushiCard.module.css';
 import Image from 'next/image';
 import Link from "next/link";

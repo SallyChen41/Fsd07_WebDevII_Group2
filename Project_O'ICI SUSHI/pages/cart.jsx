@@ -2,14 +2,25 @@ import React, { useContext } from 'react';
 import styles from '../styles/Cart.module.css';
 import Image from 'next/legacy/image';
 import { cartContext } from './cartContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const Cart = () => {
-  const { cart } = useContext(cartContext);
+  const { cart, updateItemQuantity, removeItemFromCart } = useContext(cartContext);
 
   const total = cart.items.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
   );
+
+  const handleQuantityChange = (itemId, e) => {
+    const newQuantity = parseInt(e.target.value);
+    updateItemQuantity(itemId, newQuantity);
+  };
+
+  const handleRemoveItem = (itemId) => {
+    removeItemFromCart(itemId);
+  };
 
   return (
     <div className={styles.container}>
@@ -38,12 +49,26 @@ const Cart = () => {
                   <span className={styles.price}>${item.price}</span>
                 </td>
                 <td>
-                  <span className={styles.quantity}>{item.quantity}</span>
+                  <input
+                    type="number"
+                    min="1"
+                    className={styles.quantityInput}
+                    value={item.quantity}
+                    onChange={(e) => handleQuantityChange(item.id, e)}
+                  />
                 </td>
                 <td>
                   <span className={styles.total}>
                     ${(item.price * item.quantity).toFixed(2)}
                   </span>
+                </td>
+                <td>
+                <button
+                    className={styles.deleteButton}
+                    onClick={() => handleRemoveItem(item.id)}
+                  >
+                    <FontAwesomeIcon icon={faTrash} />
+                  </button>
                 </td>
               </tr>
             ))}

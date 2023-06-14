@@ -1,0 +1,324 @@
+{
+  "nigiri": [
+    {
+      "id": 1,
+      "name": "TUNA NIGIRI",
+      "price": 3.99,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/nigiri/tuna.PNG"
+    },
+    {
+      "id": 2,
+      "name": "SALMON NIGIRI",
+      "price": 3.99,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/nigiri/salmon.PNG"
+    },
+    {
+      "id": 3,
+      "name": "SHRIMP NIGIRI",
+      "price": 3.99,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/nigiri/shrimp.PNG"
+    },
+    {
+      "id": 4,
+      "name": "SEABREAM NIGIRI",
+      "price": 4.99,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/nigiri/seabream.png"
+    },
+    {
+      "id": 5,
+      "name": "ABALONE NIGIRI",
+      "price": 4.99,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/nigiri/abalone.png"
+    },
+    {
+      "id": 6,
+      "name": "SCALLOP NIGIRI",
+      "price": 4.99,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/nigiri/scallop.png"
+    },
+    {
+      "id": 7,
+      "name": "EEL NIGIRI",
+      "price": 4.99,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/nigiri/eel.png"
+    },
+    {
+      "id": 8,
+      "name": "KALBEE BEEF NIGIRI",
+      "price": 2.99,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/nigiri/kalbeeBeef.png"
+    },
+    {
+      "id": 9,
+      "name": "TAMAGO NIGIRI",
+      "price": 2.99,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/nigiri/tamago.png"
+    }
+  ],
+  "maki": [
+    {
+      "id": 10,
+      "name": "TUNA MAKI",
+      "price": 3.99,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/maki/tuna.png"
+    },
+    {
+      "id": 11,
+      "name": "SALMON ROEMAKI",
+      "price": 3.99,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/maki/salmonRoe.png"
+    },
+    {
+      "id": 12,
+      "name": "TUNA MAYO MAKI",
+      "price": 2.99,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/maki/tunaMayo.png"
+    },
+    {
+      "id": 13,
+      "name": "CORN MAKI",
+      "price": 2.99,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/maki/corn.png"
+    },
+    {
+      "id": 14,
+      "name": "CUCUMBER MAKI",
+      "price": 2.99,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/maki/cucumber.png"
+    },
+    {
+      "id": 15,
+      "name": "CALI ROLL",
+      "price": 3.99,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/maki/caliRoll.png"
+    },
+    {
+      "id": 16,
+      "name": "INARI",
+      "price": 2.99,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/maki/inari.png"
+    }
+  ],
+  "poke": [
+    {
+      "id": 17,
+      "name": "BLACK SESAME BOWL",
+      "price": 13.99,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/poke/blackSesameBowl.png"
+    },
+    {
+      "id": 18,
+      "name": "LOBSTER BOWL",
+      "price": 15.99,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/poke/LobsterBowl.png"
+    },
+    {
+      "id": 19,
+      "name": "SALMON BOWL",
+      "price": 14.99,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/poke/SalmonBowl.png"
+    },
+    {
+      "id": 20,
+      "name": "SHRIMP BOWL",
+      "price": 14.99,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/poke/ShrimpBowl.png"
+    },
+    {
+      "id": 21,
+      "name": "SPICY SALMON BOWL",
+      "price": 15.99,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/poke/SpicySalmonBowl.png"
+    },
+    {
+      "id": 22,
+      "name": "TUNA BOWL",
+      "price": 14.99,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/poke/TunaBowl.png"
+    },
+    {
+      "id": 23,
+      "name": "UMAMI BOWL",
+      "price": 15.99,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/poke/umamiBowl.png"
+    },
+    {
+      "id": 24,
+      "name": "VEGGIE BOWL",
+      "price": 13.99,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/poke/VeggieBowl.png"
+    }
+  ],
+  "sushipizza": [
+    {
+      "id": 25,
+      "name": "AUTHENTIK PIZZA",
+      "price": 11.99,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/sushipizza/AuthentikPizza.png"
+    },
+    {
+      "id": 26,
+      "name": "LOBSTER PIZZA",
+      "price": 12.99,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/sushipizza/LobsterPizza.png"
+    },
+    {
+      "id": 27,
+      "name": "PIZZA SLIDER",
+      "price": 12.99,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/sushipizza/PizzaSlider.png"
+    },
+    {
+      "id": 28,
+      "name": "SUNRISE PIZZA",
+      "price": 12.99,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/sushipizza/SunrisePizza.png"
+    }
+  ],
+  "soup": [
+    {
+      "id": 29,
+      "name": "MISO SOUP",
+      "price": 3.99,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/soup/misoSoup.png"
+    },
+    {
+      "id": 30,
+      "name": "BEEF UDON",
+      "price": 10.99,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/soup/beefUdon.png"
+    },
+    {
+      "id": 31,
+      "name": "INARI UDON",
+      "price": 9.99,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/soup/inariUdon.png"
+    },
+    {
+      "id": 32,
+      "name": "RAMEN",
+      "price": 11.99,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/soup/ramen.png"
+    }
+  ],
+  "sides": [
+    {
+      "id": 33,
+      "name": "CHAWANMUSHI",
+      "price": 5.99,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/sides/chawanmushi.png"
+    },
+    {
+      "id": 34,
+      "name": "TAMAGOYAKI",
+      "price": 6.99,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/sides/tamagoyaki.png"
+    },
+    {
+      "id": 35,
+      "name": "KARAAGE",
+      "price": 6.99,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/sides/karaage.png"
+    },
+    {
+      "id": 36,
+      "name": "EDAMAME",
+      "price": 3.99,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/sides/edamame.png"
+    },
+    {
+      "id": 37,
+      "name": "FRENCH FRIES",
+      "price": 3.99,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/sides/fries.png"
+    }
+  ],
+  "drinks": [
+    {
+      "id": 38,
+      "name": "COKE",
+      "price": 1.99,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/drinks/coke.png"
+    },
+    {
+      "id": 39,
+      "name": "SPRITE",
+      "price": 1.99,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/drinks/sprite.png"
+    },
+    {
+      "id": 40,
+      "name": "CALPIS",
+      "price": 2.49,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/drinks/calpis.png"
+    },
+    {
+      "id": 41,
+      "name": "ICED COFFEE",
+      "price": 2.99,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/drinks/icedCoffee.png"
+    },
+    {
+      "id": 42,
+      "name": "ICED CAFE LATTE",
+      "price": 3.49,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/drinks/icedCafeLatte.png"
+    },
+    {
+      "id": 43,
+      "name": "DRAFT BEER",
+      "price": 5.99,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/drinks/draftBeer.png"
+    },
+    {
+      "id": 44,
+      "name": "UMESHU",
+      "price": 5.99,
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "image": "./public/img/drinks/umeshu.png"
+    }
+  ]
+}

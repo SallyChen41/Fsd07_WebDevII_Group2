@@ -65,6 +65,24 @@
   margin-bottom: 16px;
 }
 
+.extras{
+  font-size: 0.8rem;
+  color: #333;
+  text-decoration: none;
+}
+
+.quantityInput {
+  width: 3.5em;
+}
+
+.deleteButton {
+  background-color: white;
+  color: #d1411e;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+}
+
 @media screen and (max-width: 480px) {
   .container {
     flex-direction: column;
