@@ -8,14 +8,23 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@firebase/auth": "^0.23.2",
+    "@firebase/firestore": "^3.12.2",
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/free-brands-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@react-google-maps/api": "^2.18.1",
     "bootstrap": "^5.3.0",
+    "chart.js": "^4.3.0",
     "firebase": "^9.22.2",
+    "firebase-admin": "^11.9.0",
+    "mongodb": "^5.6.0",
     "next": "13.4.4",
+    "next-transpile-modules": "^10.0.0",
     "react": "18.2.0",
+    "react-bootstrap": "^2.7.4",
+    "react-chartjs-2": "^5.2.0",
+    "react-data-table-component": "^7.5.3",
     "react-dom": "18.2.0"
   },
   "devDependencies": {

@@ -49,7 +49,7 @@ const Login = () => {
         <FlashMessage message="Logged in successfully!" />
       )}
 
-      {errorMessage && <ErrorMessage message={errorMessage} />}
+      {errorMessage && <ErrorMessage error={errorMessage} />}
 
       <form className="mt-4" onSubmit={handleLogin}>
         <div className="mb-3">

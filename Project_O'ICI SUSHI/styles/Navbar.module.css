@@ -36,7 +36,7 @@
   font-weight: 500;
 }
 
-.cart{
+.cart {
   position: relative;
 }
 
@@ -57,6 +57,11 @@
   animation: pulse 1s infinite; /* Add animation for the counter */
 }
 
+.linkText {
+  text-decoration: none;
+  color: black;
+}
+
 @keyframes pulse {
   0% {
     transform: scale(1);
@@ -69,7 +74,7 @@
   }
 }
 
-@media screen and (max-width:480px) {
+@media screen and (max-width: 480px) {
   .item:nth-child(2) {
     display: none;
   }

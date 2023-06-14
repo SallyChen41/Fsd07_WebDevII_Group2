@@ -80,6 +80,7 @@ const Register = () => {
       // creates a document reference for the "users" collection
       // with the user's UID as the document ID and then sets the userData
       // object as the data for that document in the Firestore database
+
       await setDoc(doc(firestore, "users", user.uid), userData);
 
       // Registration successful
@@ -115,7 +116,7 @@ const Register = () => {
         <FlashMessage message="Registered successfully!" />
       )}
 
-      {errorMessage && <ErrorMessage message={errorMessage} />}
+      {errorMessage && <ErrorMessage error={errorMessage} />}
       <form onSubmit={handleRegister}>
         <div className="mb-3">
           <input
