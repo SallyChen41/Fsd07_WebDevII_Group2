@@ -2,8 +2,10 @@ import React from 'react'
 import styles from "../styles/Menu.module.css";
 import SushiCategory from '../components/SushiCategory';
 import SushiCard from '../components/SushiCard';
+import { firestore } from '../config/firebase';
 
 const menu = () => {
+  const [sushiList, setSushiList] = useState([]);
   return (
     <div className={styles.container}>
       <div className={styles.menuContainer}>
@@ -30,7 +32,7 @@ const menu = () => {
         <SushiCard></SushiCard>
       </div>
       <h2>BENTO</h2>
-      <div className={styles.itemCategory} id='bento'>
+      <div className={styles.itemCategory} id='sushipizza'>
         <SushiCard></SushiCard>
         <SushiCard></SushiCard>
         <SushiCard></SushiCard>
