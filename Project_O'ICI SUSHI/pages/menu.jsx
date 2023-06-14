@@ -1,8 +1,8 @@
-import React from 'react'
+import React from "react";
 import styles from "../styles/Menu.module.css";
-import SushiCategory from '../components/SushiCategory';
-import SushiCard from '../components/SushiCard';
-import { firestore } from '../config/firebase';
+import SushiCategory from "../components/SushiCategory";
+import SushiCard from "../components/SushiCard";
+import { firestore } from "../config/firebase";
 
 const menu = () => {
   const [sushiList, setSushiList] = useState([]);
@@ -14,49 +14,49 @@ const menu = () => {
         </div>
       </div>
       <h2>NIGIRI</h2>
-      <div className={styles.itemCategory} id='nigiri'>
+      <div className={styles.itemCategory} id="nigiri">
         <SushiCard></SushiCard>
         <SushiCard></SushiCard>
         <SushiCard></SushiCard>
       </div>
       <h2>MAKI</h2>
-      <div className={styles.itemCategory} id='maki'>
+      <div className={styles.itemCategory} id="maki">
         <SushiCard></SushiCard>
         <SushiCard></SushiCard>
         <SushiCard></SushiCard>
       </div>
       <h2>POKE</h2>
-      <div className={styles.itemCategory} id='poke'>
+      <div className={styles.itemCategory} id="poke">
         <SushiCard></SushiCard>
         <SushiCard></SushiCard>
         <SushiCard></SushiCard>
       </div>
       <h2>BENTO</h2>
-      <div className={styles.itemCategory} id='sushipizza'>
+      <div className={styles.itemCategory} id="sushipizza">
         <SushiCard></SushiCard>
         <SushiCard></SushiCard>
         <SushiCard></SushiCard>
       </div>
       <h2>SOUP</h2>
-      <div className={styles.itemCategory} id='soup'>
+      <div className={styles.itemCategory} id="soup">
         <SushiCard></SushiCard>
         <SushiCard></SushiCard>
         <SushiCard></SushiCard>
       </div>
       <h2>SIDES</h2>
-      <div className={styles.itemCategory} id='sides'>
+      <div className={styles.itemCategory} id="sides">
         <SushiCard></SushiCard>
         <SushiCard></SushiCard>
         <SushiCard></SushiCard>
       </div>
       <h2>DRINKS</h2>
-      <div className={styles.itemCategory} id='drinks'>
+      <div className={styles.itemCategory} id="drinks">
         <SushiCard></SushiCard>
         <SushiCard></SushiCard>
         <SushiCard></SushiCard>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default menu
+export default menu;
