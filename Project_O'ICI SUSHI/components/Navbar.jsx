@@ -9,7 +9,7 @@ import { auth, isAdmin } from "../config/firebase";
 const Navbar = () => {
   const { cart } = useContext(cartContext);
   // State to hold the current user
-
+  const [contactClicked, setContactClicked] = useState(false);
   const [user, setUser] = useState(null);
   const [isAdminUser, setIsAdminUser] = useState(false);
 
@@ -31,10 +31,18 @@ const Navbar = () => {
         setIsAdminUser(false); // Reset the isAdminUser state
       }
     });
-
     // Clean up the subscription when the component unmounts
     return () => unsubscribe();
   }, []);
+
+  useEffect(() => {
+    if (contactClicked) {
+      window.scrollTo({
+        top: document.documentElement.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  }, [contactClicked]);
 
   const handleLogout = async () => {
     try {
@@ -61,7 +69,9 @@ const Navbar = () => {
           <Link href="/menu" className={styles.linkText}>
             <li className={styles.listItem}>Menu</li>
           </Link>
-          <li className={styles.listItem}>Conatct</li>
+          <li className={`${styles.listItem} ${styles.pointer}`} onClick={() => setContactClicked(true)}>
+            Contact
+          </li>
           <li className={styles.listItem}>Reservation</li>
           <li className={styles.listItem}>My Orders</li>
           {isAdminUser && ( // Render the admin link only if the user is an admin
@@ -74,7 +84,7 @@ const Navbar = () => {
               <li className={styles.listItem}>Welcome, {user.email}</li>
 
               <li className={styles.listItem}>
-                <button onClick={handleLogout}>Logout</button>
+                <button onClick={handleLogout} className={styles.button}>Logout</button>
               </li>
             </>
           ) : (
