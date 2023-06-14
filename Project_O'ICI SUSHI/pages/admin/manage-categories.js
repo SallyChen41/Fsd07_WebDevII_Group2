@@ -99,6 +99,7 @@ const ManageCategories = () => {
   const columns = [
     { name: "Name", selector: (row) => row.name, sortable: true },
     {
+      name: "Actions",
       cell: (row) => (
         <button
           className="btn btn-danger"
