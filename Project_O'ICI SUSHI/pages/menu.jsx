@@ -5,7 +5,6 @@ import SushiCard from '../components/SushiCard';
 import { firestore } from '../config/firebase';
 
 const menu = () => {
-  const [sushiList, setSushiList] = useState([]);
   return (
     <div className={styles.container}>
       <div className={styles.menuContainer}>
