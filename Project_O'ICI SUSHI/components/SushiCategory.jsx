@@ -35,8 +35,8 @@ const SushiCategory = () => {
       </div>
       <div className={styles.link} onClick={() => handleClick('bento')}>
         <div className={styles.imageContainer}>
-          <Image src="/img/Bento.png" alt="bento" width="50" height="50" />
-          <span className={styles.imageText}>BENTO</span>
+          <Image src="/img/Sushipizza.jpeg" alt="Sushipizza" width="50" height="50" />
+          <span className={styles.imageText}>SUSHIPIZZA</span>
         </div>
       </div>
       <div className={styles.link} onClick={() => handleClick('soup')}>

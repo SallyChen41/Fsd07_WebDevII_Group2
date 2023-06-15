@@ -27,7 +27,8 @@
     "react-bootstrap": "^2.7.4",
     "react-chartjs-2": "^5.2.0",
     "react-data-table-component": "^7.5.3",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-scroll": "^1.8.9"
   },
   "devDependencies": {
     "eslint": "8.42.0",

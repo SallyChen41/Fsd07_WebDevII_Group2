@@ -30,8 +30,8 @@ const Cart = () => {
 
   const [open, setOpen] = useState(false);
   const [cash, setCash] = useState(false);
-  const amount = "2";
-  const currency = "USD";
+  const amount = total;
+  const currency = "CAD";
   const style = { layout: "vertical" };
 
   const ButtonWrapper = ({ currency, showSpinner }) => {

@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react';
+import React, { createContext, useReducer, useEffect } from 'react';
 
 const initialState = {
   items: [],
@@ -8,25 +8,36 @@ export const cartContext = createContext();
 
 const cartReducer = (state, action) => {
   switch (action.type) {
-    case 'ADD_ITEM':
+    case 'SET_ITEMS':
       return {
         ...state,
-        items: [...state.items, action.payload],
+        items: action.payload,
+      };
+    case 'ADD_ITEM':
+      const addedItems = [...state.items, action.payload];
+      localStorage.setItem('cartItems', JSON.stringify(addedItems));
+      return {
+        ...state,
+        items: addedItems,
       };
     case 'UPDATE_QUANTITY':
+      const updatedItems = state.items.map(item => {
+        if (item.id === action.payload.id) {
+          return { ...item, quantity: action.payload.quantity };
+        }
+        return item;
+      });
+      localStorage.setItem('cartItems', JSON.stringify(updatedItems));
       return {
         ...state,
-        items: state.items.map(item => {
-          if (item.id === action.payload.id) {
-            return { ...item, quantity: action.payload.quantity };
-          }
-          return item;
-        }),
+        items: updatedItems,
       };
     case 'REMOVE_ITEM':
+      const removedItems = state.items.filter(item => item.id !== action.payload);
+      localStorage.setItem('cartItems', JSON.stringify(removedItems));
       return {
         ...state,
-        items: state.items.filter(item => item.id !== action.payload),
+        items: removedItems,
       };
     default:
       return state;
@@ -35,6 +46,13 @@ const cartReducer = (state, action) => {
 
 export const CartProvider = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, initialState);
+
+  useEffect(() => {
+    const storedItems = localStorage.getItem('cartItems');
+    if (storedItems) {
+      dispatch({ type: 'SET_ITEMS', payload: JSON.parse(storedItems) });
+    }
+  }, []);
 
   const addItemToCart = (item) => {
     dispatch({ type: 'ADD_ITEM', payload: item });
@@ -50,11 +68,13 @@ export const CartProvider = ({ children }) => {
 
   return (
     <cartContext.Provider 
-    value={{ 
-      cart: state, 
-      addItemToCart,
-      updateItemQuantity,
-      removeItemFromCart, }}>
+      value={{ 
+        cart: state, 
+        addItemToCart,
+        updateItemQuantity,
+        removeItemFromCart,
+      }}
+    >
       {children}
     </cartContext.Provider>
   )

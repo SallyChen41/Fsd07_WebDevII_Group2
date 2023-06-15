@@ -1,8 +1,11 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import styles from '../../styles/Item.module.css';
 import Image from 'next/image';
 import { cartContext } from '../cartContext';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { collection, getDocs } from 'firebase/firestore';
+import { firestore } from '../../config/firebase';
 
 const Item = () => {
   const { addItemToCart } = useContext(cartContext);
@@ -10,12 +13,61 @@ const Item = () => {
   const [quantity, setQuantity] = useState(1);
   const [extras, setExtras] = useState([]);
 
-  const sushi = {
-    id: 1,
-    img: "/img/toro.PNG",
-    name: "TUNA NIGIRI",
-    price: 4.99,
-  };
+  const router = useRouter();
+  const { id } = router.query;
+  const [sushi, setSushi] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const itemsCollection = collection(firestore, 'items');
+        const categoriesCollection = collection(firestore, 'categories');
+  
+        const [itemsSnapshot, categoriesSnapshot] = await Promise.all([
+          getDocs(itemsCollection),
+          getDocs(categoriesCollection),
+        ]);
+  
+        const categoriesMap = categoriesSnapshot.docs.reduce((map, doc) => {
+          const category = doc.data();
+          map[category.name] = doc.id;
+          return map;
+        }, {});
+  
+        const itemsData = itemsSnapshot.docs.map((doc) => {
+          const itemData = doc.data();
+          const categoryId = categoriesMap[itemData.category];
+          if (categoryId === undefined) {
+            throw new Error(`Category ID not found for category: ${itemData.category}`);
+          }
+          return {
+            id: doc.id,
+            ...itemData,
+            category: itemData.category,
+          };
+        });
+  
+        const menuItems = categoriesSnapshot.docs.map((doc) => {
+          const category = doc.data();
+          const categoryId = doc.id;
+          const categoryItems = itemsData.filter((item) => item.category === category.name);
+          return {
+            id: categoryId,
+            name: category.name,
+            items: categoryItems,
+          };
+        });
+  
+        // Find the specific sushi item based on the id
+        const sushiItem = itemsData.find((item) => item.id === id);
+        setSushi(sushiItem);
+      } catch (error) {
+        console.log('Error fetching items and categories:', error.message);
+      }
+    };
+  
+    fetchData();
+  }, [id]);
 
   const handleSoySauceChange = (event) => {
     if (event.target.checked) {
@@ -44,8 +96,8 @@ const Item = () => {
   const handleAddToCart = () => {
     const selectedSushi = {
       id: sushi.id,
-      img: sushi.img,
-      name: sushi.name,
+      img: sushi.image,
+      name: sushi.itemName,
       price: sushi.price,
       extras: extras,
       quantity: quantity,
@@ -55,16 +107,21 @@ const Item = () => {
     setTimeout(() => setIsItemAdded(false), 1000); // Reset the added item animation after 1 second
   };
 
+  // Render loading state or error message if sushi is null
+  if (sushi === null) {
+    return <div>Loading...</div>; // Or display an error message
+  }
+
   return (
     <div className={styles.container}>
       {isItemAdded && <div className={styles.notification}>Item added to the cart!</div>}
       <div className={styles.left}>
         <div className={styles.imgContainer}>
-          <Image src={sushi.img} width={300} height={300} objectFit="contain" alt="" />
+          <Image src={sushi.image} width={300} height={300} objectFit="contain" alt="" />
         </div>
       </div>
       <div className={styles.right}>
-        <h1 className={styles.title}>{sushi.name}</h1>
+        <h1 className={styles.title}>{sushi.itemName}</h1>
         <span className={styles.price}>${sushi.price}</span>
         <h3 className={styles.choose}>Optional</h3>
         <div className={styles.ingredients}>
