@@ -8,16 +8,21 @@ const Order = () => {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
+    // Fetch orders when the component mounts
     const fetchOrders = async () => {
       try {
+        // Get the current user's ID from authentication
         const userId = auth.currentUser?.uid;
         if (userId) {
           const ordersRef = collection(firestore, "orders");
+          // Create a query to fetch orders of the current user
           const userOrdersQuery = query(
             ordersRef,
             where("userId", "==", userId)
           );
+          // Retrieve the order documents from Firestore
           const snapshot = await getDocs(userOrdersQuery);
+          // Map the document data and update the orders state
           const ordersData = snapshot.docs.map((doc) => doc.data());
           setOrders(ordersData);
         }
@@ -26,14 +31,18 @@ const Order = () => {
       }
     };
 
+    // Subscribe to changes in the authentication state
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
+        // If a user is logged in, fetch their orders
         fetchOrders();
       } else {
+        // If no user is logged in, clear the orders state
         setOrders([]);
       }
     });
 
+    // Unsubscribe from the authentication state changes when the component unmounts
     return unsubscribe;
   }, []);
 
@@ -43,6 +52,7 @@ const Order = () => {
         <div className={styles.row}>
           <table className={styles.table}>
             <tbody>
+              {/* Table header */}
               <tr className={styles.trTitle}>
                 <th>Order ID</th>
                 <th>Customer Full Name</th>
@@ -51,6 +61,7 @@ const Order = () => {
                 <th>Date and Time</th>
                 <th>Order Total</th>
               </tr>
+              {/* Render each order */}
               {orders.map((order) => (
                 <tr className={styles.tr} key={order.id}>
                   <td>
@@ -67,6 +78,7 @@ const Order = () => {
                   </td>
                   <td>
                     <span className={styles.address}>
+                      {/* Format the paymentTime as a localized date and time string */}
                       {new Date(order.paymentTime).toLocaleString("en-US", {
                         year: "numeric",
                         month: "2-digit",
