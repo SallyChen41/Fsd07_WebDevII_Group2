@@ -69,10 +69,15 @@ const Navbar = () => {
           <Link href="/menu" className={styles.linkText}>
             <li className={styles.listItem}>Menu</li>
           </Link>
-          <li className={`${styles.listItem} ${styles.pointer}`} onClick={() => setContactClicked(true)}>
+          <li
+            className={`${styles.listItem} ${styles.pointer}`}
+            onClick={() => setContactClicked(true)}
+          >
             Contact
           </li>
-          <li className={styles.listItem}>My Orders</li>
+          <Link href="/order" className={styles.linkText}>
+            <li className={styles.listItem}>My Orders</li>
+          </Link>
           {isAdminUser && ( // Render the admin link only if the user is an admin
             <Link href="/admin" className={styles.linkText}>
               <li className={styles.listItem}>Admin Dashboard</li>
@@ -83,7 +88,9 @@ const Navbar = () => {
               <li className={styles.listItem}>Welcome, {user.email}</li>
 
               <li className={styles.listItem}>
-                <button onClick={handleLogout} className={styles.button}>Logout</button>
+                <button onClick={handleLogout} className={styles.button}>
+                  Logout
+                </button>
               </li>
             </>
           ) : (

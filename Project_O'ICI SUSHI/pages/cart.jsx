@@ -1,7 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import styles from "../styles/Cart.module.css";
 import Image from "next/legacy/image";
-import { cartContext } from "./cartContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -9,6 +7,10 @@ import {
   PayPalButtons,
   usePayPalScriptReducer,
 } from "@paypal/react-paypal-js";
+import { auth, firestore, firebase } from "../config/firebase";
+import styles from "../styles/Cart.module.css";
+import { cartContext } from "./cartContext";
+import { collection, addDoc, setDoc, doc } from "firebase/firestore";
 
 const Cart = () => {
   const { cart, updateItemQuantity, removeItemFromCart } =
@@ -33,6 +35,35 @@ const Cart = () => {
   const amount = total;
   const currency = "CAD";
   const style = { layout: "vertical" };
+
+  const createOrder = async (orderData) => {
+    try {
+      const userId = auth.currentUser.uid;
+      const orderRef = collection(firestore, "orders");
+      const newOrder = {
+        ...orderData,
+        userId,
+        items: [...cart.items],
+        id: "",
+        userId: userId,
+      };
+      const docRef = await addDoc(orderRef, newOrder);
+      const orderId = docRef.id;
+      const orderWithId = { ...newOrder, id: orderId };
+      console.log("Order created with ID:", orderId);
+      return orderId;
+    } catch (error) {
+      console.error("Error creating order:", error);
+      return null;
+    }
+  };
+
+  const clearCart = () => {
+    cart.items.forEach((item) => {
+      removeItemFromCart(item.id);
+    });
+    updateItemQuantity(null, 0);
+  };
 
   const ButtonWrapper = ({ currency, showSpinner }) => {
     const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
@@ -74,11 +105,32 @@ const Cart = () => {
           onApprove={function (data, actions) {
             return actions.order.capture().then(function (details) {
               const shipping = details.purchase_units[0].shipping;
-              createOrder({
+              const orderData = {
                 customer: shipping.name.full_name,
                 address: shipping.address.address_line_1,
-                total: cart.total,
+                total: total,
                 method: 1,
+                id: "",
+              };
+              const userId = auth.currentUser.uid;
+              createOrder(orderData).then((orderId) => {
+                if (orderId) {
+                  const updatedOrderData = {
+                    ...orderData,
+                    id: orderId,
+                    userId: userId,
+                  };
+                  setDoc(doc(firestore, "orders", orderId), updatedOrderData)
+                    .then(() => {
+                      console.log("Order saved to Firebase:", orderId);
+                      clearCart();
+                    })
+                    .catch((error) => {
+                      console.error("Error saving order to Firebase:", error);
+                    });
+                } else {
+                  console.error("Failed to create order.");
+                }
               });
             });
           }}
