@@ -235,7 +235,7 @@ const Cart = () => {
           <div className={styles.totalText}>
             <b className={styles.totalTextTitle}>Total:</b>${total.toFixed(2)}
           </div>
-          // Payment methods section
+          {/* Payment methods section */}
           {open ? (
             <div className={styles.paymentMethods}>
               <button
