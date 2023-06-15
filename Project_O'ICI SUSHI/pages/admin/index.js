@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-// import { Bar } from "react-chartjs-2";
 import { collection, getDocs } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { auth, isAdmin, firestore } from "../../config/firebase";
@@ -32,10 +31,7 @@ const AdminPage = () => {
   const [usersCount, setUsersCount] = useState(0);
   const [categoriesCount, setCategoriesCount] = useState(0);
   const [itemsCount, setItemsCount] = useState(0);
-  //   const [ordersChartData, setOrdersChartData] = useState({
-  //     labels: [],
-  //     datasets: [],
-  //   });
+  const [ordersCount, setOrdersCount] = useState(0);
 
   useEffect(() => {
     // Fetch quantity of users from Firestore
@@ -62,30 +58,18 @@ const AdminPage = () => {
       setItemsCount(itemsData);
     };
 
-    // Fetch chart data from Firestore
-    // const fetchOrdersChartData = () => {
-    //   const ordersCollection = collection(firestore, "orders");
-    //   onSnapshot(ordersCollection, (snapshot) => {
-    //     const ordersData = snapshot.docs.map((doc) => doc.data());
-    //     // Format the data according to your chart requirements
-    //     const chartData = {
-    //       labels: ordersData.map((order) => order.label),
-    //       datasets: [
-    //         {
-    //           label: "Orders",
-    //           data: ordersData.map((order) => order.value),
-    //           backgroundColor: "rgba(75, 192, 192, 0.5)",
-    //         },
-    //       ],
-    //     };
-    //     setOrdersChartData(chartData);
-    //   });
-    // };
+    // Fetch quantity of items from Firestore
+    const fetchOrdersCount = async () => {
+      const ordersCollection = collection(firestore, "orders");
+      const ordersSnapshot = await getDocs(ordersCollection);
+      const ordersData = ordersSnapshot.size;
+      setOrdersCount(ordersData);
+    };
 
     fetchUsersCount();
     fetchItemsCount();
     fetchCategoriesCount();
-    // fetchOrdersChartData();
+    fetchOrdersCount();
   }, []);
 
   return (
@@ -93,7 +77,7 @@ const AdminPage = () => {
       <h1>Admin Dashboard</h1>
 
       <div className="row">
-        <div className="col-md-4">
+        <div className="col-md-3">
           <Link href="/admin/manage-users" className={styles.cardLink}>
             <div className="card bg-primary text-white">
               <div className="card-body">
@@ -104,7 +88,7 @@ const AdminPage = () => {
           </Link>
         </div>
 
-        <div className="col-md-4">
+        <div className="col-md-3">
           <Link href="/admin/manage-categories" className={styles.cardLink}>
             <div className="card bg-info text-white">
               <div className="card-body">
@@ -115,7 +99,7 @@ const AdminPage = () => {
           </Link>
         </div>
 
-        <div className="col-md-4">
+        <div className="col-md-3">
           <Link href="/admin/manage-items" className={styles.cardLink}>
             <div className="card bg-danger text-white">
               <div className="card-body">
@@ -126,16 +110,16 @@ const AdminPage = () => {
           </Link>
         </div>
 
-        {/* <Link href="/admin/manage-orders">
-        <div className="chart">
-          <h2>Orders</h2>
-          {ordersChartData.labels.length > 0 ? (
-            <Bar data={ordersChartData} />
-          ) : (
-            <p>Loading chart data...</p>
-          )}
+        <div className="col-md-3">
+          <Link href="/admin/manage-orders" className={styles.cardLink}>
+            <div className="card bg-warning text-white">
+              <div className="card-body">
+                <h2 className="card-title">Orders</h2>
+                <p className="card-text">Total Orders: {ordersCount}</p>
+              </div>
+            </div>
+          </Link>
         </div>
-      </Link> */}
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { firestore } from "../../config/firebase";
-import { collection, getDocs, getDoc } from "firebase/firestore";
+import { collection, getDocs, getDoc, doc } from "firebase/firestore";
 import DataTable from "react-data-table-component";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -15,20 +15,24 @@ const ManageOrders = () => {
         const ordersCollection = collection(firestore, "orders");
         const ordersSnapshot = await getDocs(ordersCollection);
         const ordersData = await Promise.all(
-          ordersSnapshot.docs.map(async (doc) => {
-            const orderData = doc.data();
-            const { username } = (
-              await getDoc(doc.ref.collection("users").doc(orderData.userId))
-            ).data();
-            const { itemName } = (
-              await getDoc(doc.ref.collection("items").doc(orderData.itemId))
-            ).data();
+          ordersSnapshot.docs.map(async (orderDoc) => {
+            const orderData = orderDoc.data();
+            const userDataRef = doc(firestore, "users", orderData.userId);
+            const userData = await getDoc(userDataRef);
+            const username = userData.data().username;
+
+            // Retrieve items as an array of objects
+            const items = Array.isArray(orderData.items)
+              ? [...orderData.items]
+              : [];
 
             return {
-              id: doc.id,
-              username,
-              itemName,
-              ...orderData,
+              id: orderDoc.id,
+              username: username,
+              total: orderData.total,
+              items: items,
+              paymentTime: new Date(orderData.paymentTime).toLocaleString(),
+              // ...orderData,
             };
           })
         );
@@ -53,27 +57,17 @@ const ManageOrders = () => {
     },
     {
       name: "Item Name",
-      selector: (row) => row.itemName,
+      selector: (row) => row.items.map((item) => item.name).join(", "),
       sortable: true,
     },
     {
-      name: "Order Date",
-      selector: (row) => row.orderDT,
-      sortable: true,
-    },
-    {
-      name: "Amount",
-      selector: (row) => row.amount,
-      sortable: true,
-    },
-    {
-      name: "Status",
-      selector: (row) => row.status,
+      name: "Total Amount",
+      selector: (row) => row.total,
       sortable: true,
     },
     {
       name: "Payment Date",
-      selector: (row) => row.paymentDT,
+      selector: (row) => row.paymentTime,
       sortable: true,
     },
   ];
