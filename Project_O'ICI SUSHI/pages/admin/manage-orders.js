@@ -12,8 +12,11 @@ const ManageOrders = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
+        // create a collection reference
         const ordersCollection = collection(firestore, "orders");
+        // retrieve all the documents
         const ordersSnapshot = await getDocs(ordersCollection);
+        // use await Promise.all() asynchronously execute multiple promises in parallel
         const ordersData = await Promise.all(
           ordersSnapshot.docs.map(async (orderDoc) => {
             const orderData = orderDoc.data();
@@ -62,7 +65,7 @@ const ManageOrders = () => {
     },
     {
       name: "Total Amount",
-      selector: (row) => row.total,
+      selector: (row) => `$${row.total}`,
       sortable: true,
     },
     {

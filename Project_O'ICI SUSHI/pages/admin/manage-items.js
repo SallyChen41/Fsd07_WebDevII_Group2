@@ -276,7 +276,7 @@ const ManageItems = () => {
     },
     {
       name: "Price",
-      selector: (row) => row.price,
+      selector: (row) => `$${row.price}`,
       sortable: true,
     },
     {
