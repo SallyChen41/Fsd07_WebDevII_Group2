@@ -11,7 +11,7 @@ export default function Home() {
       <Head>
         <title>O'ICI SUSHI</title>
         <meta name="description" content="Best sushi restaurant in MTL" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/sushii.ico" />
       </Head>
       <Features></Features>
       <SushiCategory></SushiCategory>

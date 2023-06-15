@@ -46,6 +46,7 @@ const Cart = () => {
         items: [...cart.items],
         id: "",
         userId: userId,
+        paymentTime: new Date().toISOString(),
       };
       const docRef = await addDoc(orderRef, newOrder);
       const orderId = docRef.id;
@@ -118,7 +119,9 @@ const Cart = () => {
                   const updatedOrderData = {
                     ...orderData,
                     id: orderId,
+                    items: [...cart.items],
                     userId: userId,
+                    paymentTime: new Date().toISOString(),
                   };
                   setDoc(doc(firestore, "orders", orderId), updatedOrderData)
                     .then(() => {

@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { auth, isAdmin } from "../config/firebase";
 
 const Navbar = () => {
-  const { cart } = useContext(cartContext);
+  const { cart, logout } = useContext(cartContext);
   // State to hold the current user
   const [contactClicked, setContactClicked] = useState(false);
   const [user, setUser] = useState(null);
@@ -48,12 +48,14 @@ const Navbar = () => {
     try {
       await auth.signOut(); // Sign out the user using the authentication service
 
+      logout(); // Call the logout function from the cart context
+
       router.push("/"); // Redirect to the home page after successful logout
     } catch (error) {
       console.log("Logout error:", error.message);
     }
   };
-
+  
   return (
     <div className={styles.container}>
       <div className={styles.item}>

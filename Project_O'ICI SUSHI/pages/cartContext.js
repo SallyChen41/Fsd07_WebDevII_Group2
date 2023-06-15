@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useEffect } from 'react';
+import React, { createContext, useReducer, useEffect, useState } from 'react';
 
 const initialState = {
   items: [],
@@ -46,13 +46,14 @@ const cartReducer = (state, action) => {
 
 export const CartProvider = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, initialState);
+  const [userId, setUserId] = useState(null);
 
   useEffect(() => {
-    const storedItems = localStorage.getItem('cartItems');
+    const storedItems = localStorage.getItem(`cartItems_${userId}`);
     if (storedItems) {
       dispatch({ type: 'SET_ITEMS', payload: JSON.parse(storedItems) });
     }
-  }, []);
+  }, [userId]);
 
   const addItemToCart = (item) => {
     dispatch({ type: 'ADD_ITEM', payload: item });
@@ -66,6 +67,16 @@ export const CartProvider = ({ children }) => {
     dispatch({ type: 'REMOVE_ITEM', payload: itemId });
   };
 
+  const logout = () => {
+    localStorage.removeItem(`cartItems_${userId}`);
+    setUserId(null);
+    window.location.href = '/';
+  };
+
+  const setUser = (id) => {
+    setUserId(id);
+  };
+
   return (
     <cartContext.Provider 
       value={{ 
@@ -73,6 +84,8 @@ export const CartProvider = ({ children }) => {
         addItemToCart,
         updateItemQuantity,
         removeItemFromCart,
+        setUser,
+        logout,
       }}
     >
       {children}

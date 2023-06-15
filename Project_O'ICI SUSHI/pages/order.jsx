@@ -48,6 +48,7 @@ const Order = () => {
                 <th>Customer Full Name</th>
                 <th>Address</th>
                 <th>Payment Method</th>
+                <th>Date and Time</th>
                 <th>Order Total</th>
               </tr>
               {orders.map((order) => (
@@ -63,6 +64,18 @@ const Order = () => {
                   </td>
                   <td>
                     <span className={styles.address}>{order.method}</span>
+                  </td>
+                  <td>
+                    <span className={styles.address}>
+                      {new Date(order.paymentTime).toLocaleString("en-US", {
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        second: "2-digit",
+                      })}
+                    </span>
                   </td>
                   <td>
                     {order.total ? (
