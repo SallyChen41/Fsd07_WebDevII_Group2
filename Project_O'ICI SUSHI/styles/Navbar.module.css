@@ -29,10 +29,11 @@
   align-items: center;
   list-style: none;
   color: black;
+  font-size: 1.2em;
 }
 
 .listItem {
-  margin: 20px;
+  margin-right: 2em;
   font-weight: 500;
 }
 

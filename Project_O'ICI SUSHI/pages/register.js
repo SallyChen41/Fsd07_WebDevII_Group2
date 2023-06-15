@@ -83,6 +83,8 @@ const Register = () => {
 
       await setDoc(doc(firestore, "users", user.uid), userData);
 
+      // Set the user ID in the cart context
+      setUser(user.uid);
       // Registration successful
       console.log("Registered successfully");
       setShowFlash(true);

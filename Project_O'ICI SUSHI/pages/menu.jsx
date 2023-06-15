@@ -71,7 +71,7 @@ const Menu = () => {
       </div>
       {menuData.length > 0 ? (
         menuData.map((item) => (
-          <div key={item.id} id={item.id}>
+          <div key={item.id} id={item.name}>
             <h2>{item.name}</h2>
             <div className={styles.itemCategory}>
               {item.items && item.items.map((menuItem) => (
