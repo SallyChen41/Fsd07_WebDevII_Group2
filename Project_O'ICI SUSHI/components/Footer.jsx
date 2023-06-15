@@ -48,15 +48,15 @@ const Footer = () => {
             <br /> 11:00 – 22:00
           </p>
           <br />
-          <a href="https://www.facebook.com/your-page">
-            <FontAwesomeIcon icon={faFacebook} className={styles.icon}></FontAwesomeIcon>
-          </a>
-          <a href="https://www.twitter.com/your-page">
-            <FontAwesomeIcon icon={faTwitter} className={styles.icon}></FontAwesomeIcon>
-          </a>
-          <a href="https://www.instagram.com/your-page">
-            <FontAwesomeIcon icon={faInstagram} className={styles.icon}></FontAwesomeIcon>
-          </a> 
+//           <a href="https://www.facebook.com/your-page">
+//             <FontAwesomeIcon icon={faFacebook} className={styles.icon}></FontAwesomeIcon>
+//           </a>
+//           <a href="https://www.twitter.com/your-page">
+//             <FontAwesomeIcon icon={faTwitter} className={styles.icon}></FontAwesomeIcon>
+//           </a>
+//           <a href="https://www.instagram.com/your-page">
+//             <FontAwesomeIcon icon={faInstagram} className={styles.icon}></FontAwesomeIcon>
+//           </a> 
         </div>
       </div>
 
