@@ -69,23 +69,27 @@ const Menu = () => {
           <SushiCategory categories={categories} />
         </div>
       </div>
-      {menuData.map((item) => (
-        <div key={item.id}>
-          <h2>{item.name}</h2>
-          <div className={styles.itemCategory}>
-            {item.items && item.items.map((menuItem) => (
-              <SushiCard
-                key={menuItem.id}
-                id={menuItem.id}
-                itemName={menuItem.itemName}
-                description={menuItem.description}
-                price={menuItem.price}
-                image={menuItem.image}
-              />
-            ))}
+      {menuData.length > 0 ? (
+        menuData.map((item) => (
+          <div key={item.id} id={item.id}>
+            <h2>{item.name}</h2>
+            <div className={styles.itemCategory}>
+              {item.items && item.items.map((menuItem) => (
+                <SushiCard
+                  key={menuItem.id}
+                  id={menuItem.id}
+                  itemName={menuItem.itemName}
+                  description={menuItem.description}
+                  price={menuItem.price}
+                  image={menuItem.image}
+                />
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
+        ))
+      ) : (
+        <div>No menu items available</div>
+      )}
     </div>
   )
 }

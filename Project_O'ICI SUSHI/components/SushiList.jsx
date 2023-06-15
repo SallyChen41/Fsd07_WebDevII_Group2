@@ -14,14 +14,7 @@ const SushiList = () => {
       </p>
 
       <div className={styles.wrapper}>
-          <SushiCard></SushiCard>
-          <SushiCard></SushiCard>
-          <SushiCard></SushiCard>
-          <SushiCard></SushiCard>
-          <SushiCard></SushiCard>
-          <SushiCard></SushiCard>
-          <SushiCard></SushiCard>
-          <SushiCard></SushiCard>
+
       </div>
     </div>
   )

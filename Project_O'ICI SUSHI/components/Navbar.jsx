@@ -72,7 +72,6 @@ const Navbar = () => {
           <li className={`${styles.listItem} ${styles.pointer}`} onClick={() => setContactClicked(true)}>
             Contact
           </li>
-          <li className={styles.listItem}>Reservation</li>
           <li className={styles.listItem}>My Orders</li>
           {isAdminUser && ( // Render the admin link only if the user is an admin
             <Link href="/admin" className={styles.linkText}>
