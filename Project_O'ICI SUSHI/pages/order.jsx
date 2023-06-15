@@ -48,6 +48,7 @@ const Order = () => {
                 <th>Customer Full Name</th>
                 <th>Address</th>
                 <th>Payment Method</th>
+                <th>Date and Time</th>
                 <th>Order Total</th>
               </tr>
               {orders.map((order) => (
