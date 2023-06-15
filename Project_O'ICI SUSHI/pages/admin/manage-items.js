@@ -22,6 +22,8 @@ const ManageItems = () => {
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [deletingItem, setDeletingItem] = useState(null);
+  const [editingItem, setEditingItem] = useState(null);
+  const [editMode, setEditMode] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [newItem, setNewItem] = useState({
     itemName: "",
@@ -35,10 +37,12 @@ const ManageItems = () => {
     const fetchData = async () => {
       console.log("Fetching items..."); // Debug statement
       try {
+        // create a collection reference
         const itemsCollection = collection(firestore, "items");
         const categoriesCollection = collection(firestore, "categories");
 
         // fetch the snapshots of the documents in those collections
+        // use Promise.all() function to execute multiple promises in parallel
         const [itemsSnapshot, categoriesSnapshot] = await Promise.all([
           getDocs(itemsCollection),
           getDocs(categoriesCollection),
@@ -88,7 +92,9 @@ const ManageItems = () => {
 
   const handleAddItem = async () => {
     try {
+      // create a collection reference
       const itemsCollection = collection(firestore, "items");
+      // add a new document to the itemsCollection
       const newItemRef = await addDoc(itemsCollection, {
         itemName: newItem.itemName,
         description: newItem.description,
@@ -98,8 +104,11 @@ const ManageItems = () => {
 
       if (newItem.image) {
         // Upload image to Firebase Storage
+        // create a storage reference
         const storageRef = ref(storage, `items/${newItem.image.name}`);
+        // upload the bytes of the newItem.image file to the storageRef
         await uploadBytes(storageRef, newItem.image);
+        // retrieve the download URL
         const downloadURL = await getDownloadURL(storageRef);
         console.log(downloadURL);
 
@@ -114,6 +123,7 @@ const ManageItems = () => {
       }
 
       console.log("Item added successfully!");
+      // reset the new item
       setNewItem({
         itemName: "",
         description: "",
@@ -138,6 +148,7 @@ const ManageItems = () => {
 
   const handleDeleteItem = async (itemId) => {
     try {
+      // create a document reference
       const itemRef = doc(firestore, "items", itemId);
       await deleteDoc(itemRef);
       console.log("Item deleted successfully!");
@@ -156,6 +167,56 @@ const ManageItems = () => {
       setDeletingItem(null);
       setShowModal(false);
     }
+  };
+
+  const handleUpdateItem = async (itemId) => {
+    try {
+      // create a document reference
+      const itemRef = doc(firestore, "items", itemId);
+      // Find the category object with the matching ID in the categories array
+      const category = categories.find(
+        (cat) => cat.id === editingItem.category
+      );
+      const categoryName = category ? category.name : "";
+      await updateDoc(itemRef, {
+        itemName: editingItem.itemName,
+        description: editingItem.description,
+        price: editingItem.price,
+        category: categoryName,
+      });
+
+      console.log("Item updated successfully!");
+
+      // Refresh the items list after updating the item
+      const itemsCollection = collection(firestore, "items");
+      const itemsSnapshot = await getDocs(itemsCollection);
+      const itemsData = itemsSnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setItems(itemsData);
+    } catch (error) {
+      console.log("Error updating item:", error.message);
+      setError(error.message);
+    } finally {
+      setEditingItem(null);
+      setShowModal(false);
+    }
+  };
+
+  const openEditModal = (item) => {
+    // Find the category ID based on the category name of the item
+    const category = categories.find((cat) => cat.name === item.category);
+    const categoryId = category ? category.id : "";
+    setEditingItem({ ...item, category: categoryId });
+    setEditMode(true);
+    setShowModal(true);
+  };
+
+  const closeEditModal = () => {
+    // setEditingItem(null);
+    setEditMode(false);
+    setShowModal(false);
   };
 
   const openDeleteModal = (itemId) => {
@@ -184,10 +245,20 @@ const ManageItems = () => {
     }));
   };
 
+  const handleEditInputChange = (e) => {
+    const categoryId = e.target.value;
+    setEditingItem({
+      ...editingItem,
+      category: categoryId,
+    });
+    setEditMode(true);
+  };
+
   const handleSearch = (event) => {
     setSearchText(event.target.value);
   };
 
+  // filter an array of items based on a searchText value
   const filteredItems = items.filter((item) =>
     item.itemName.toLowerCase().includes(searchText.toLowerCase())
   );
@@ -227,12 +298,20 @@ const ManageItems = () => {
     {
       name: "Actions",
       cell: (row) => (
-        <button
-          className="btn btn-danger"
-          onClick={() => openDeleteModal(row.id)}
-        >
-          Delete
-        </button>
+        <>
+          <button
+            className="btn btn-primary"
+            onClick={() => openEditModal(row)}
+          >
+            Edit
+          </button>
+          <button
+            className="btn btn-danger"
+            onClick={() => openDeleteModal(row.id)}
+          >
+            Delete
+          </button>
+        </>
       ),
       sortable: false,
     },
@@ -267,7 +346,7 @@ const ManageItems = () => {
         </button>
       </div>
 
-      {showModal && deletingItem === null && (
+      {showModal && deletingItem === null && !editMode && (
         <Modal
           title="Add Item"
           content={
@@ -335,7 +414,89 @@ const ManageItems = () => {
         />
       )}
 
-      {deletingItem && (
+      {showModal && deletingItem === null && editMode && (
+        <Modal
+          title="Edit Item"
+          onConfirm={() => handleUpdateItem(editingItem.id)}
+          onCancel={closeEditModal}
+          content={
+            <div>
+              <div className="mb-3">
+                <label htmlFor="editedItemName" className="form-label">
+                  Item Name
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="editedItemName"
+                  value={editingItem.itemName}
+                  onChange={(e) =>
+                    setEditingItem({
+                      ...editingItem,
+                      itemName: e.target.value,
+                    })
+                  }
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="editedDescription" className="form-label">
+                  Description
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="editedDescription"
+                  value={editingItem.description}
+                  onChange={(e) =>
+                    setEditingItem({
+                      ...editingItem,
+                      description: e.target.value,
+                    })
+                  }
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="editedPrice" className="form-label">
+                  Price
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="editedPrice"
+                  value={editingItem.price}
+                  onChange={(e) =>
+                    setEditingItem({
+                      ...editingItem,
+                      price: e.target.value,
+                    })
+                  }
+                />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="editedCategory" className="form-label">
+                  Category
+                </label>
+                <select
+                  id="editedCategory"
+                  name="category"
+                  value={editingItem.category}
+                  onChange={handleEditInputChange}
+                  className="form-select"
+                >
+                  <option value="">Select Category</option>
+                  {categories.map((category) => (
+                    <option key={category.id} value={category.id}>
+                      {category.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          }
+        />
+      )}
+
+      {deletingItem !== null && (
         <Modal
           title="Delete Item"
           content="Are you sure you want to delete this item?"

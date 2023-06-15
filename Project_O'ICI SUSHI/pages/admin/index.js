@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-
+// import { Bar } from "react-chartjs-2";
 import { collection, getDocs } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { auth, isAdmin, firestore } from "../../config/firebase";
@@ -50,12 +50,11 @@ const AdminPage = () => {
     const fetchCategoriesCount = async () => {
       const categoriesCollection = collection(firestore, "categories");
       const categoriesSnapshot = await getDocs(categoriesCollection);
-
       const categoriesData = categoriesSnapshot.size;
       setCategoriesCount(categoriesData);
     };
 
-    // Fetch quantity of products from Firestore
+    // Fetch quantity of items from Firestore
     const fetchItemsCount = async () => {
       const itemsCollection = collection(firestore, "items");
       const itemsSnapshot = await getDocs(itemsCollection);
@@ -63,9 +62,30 @@ const AdminPage = () => {
       setItemsCount(itemsData);
     };
 
+    // Fetch chart data from Firestore
+    // const fetchOrdersChartData = () => {
+    //   const ordersCollection = collection(firestore, "orders");
+    //   onSnapshot(ordersCollection, (snapshot) => {
+    //     const ordersData = snapshot.docs.map((doc) => doc.data());
+    //     // Format the data according to your chart requirements
+    //     const chartData = {
+    //       labels: ordersData.map((order) => order.label),
+    //       datasets: [
+    //         {
+    //           label: "Orders",
+    //           data: ordersData.map((order) => order.value),
+    //           backgroundColor: "rgba(75, 192, 192, 0.5)",
+    //         },
+    //       ],
+    //     };
+    //     setOrdersChartData(chartData);
+    //   });
+    // };
+
     fetchUsersCount();
     fetchItemsCount();
     fetchCategoriesCount();
+    // fetchOrdersChartData();
   }, []);
 
   return (
@@ -105,6 +125,17 @@ const AdminPage = () => {
             </div>
           </Link>
         </div>
+
+        {/* <Link href="/admin/manage-orders">
+        <div className="chart">
+          <h2>Orders</h2>
+          {ordersChartData.labels.length > 0 ? (
+            <Bar data={ordersChartData} />
+          ) : (
+            <p>Loading chart data...</p>
+          )}
+        </div>
+      </Link> */}
       </div>
     </div>
   );

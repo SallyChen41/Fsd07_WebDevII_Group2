@@ -22,12 +22,16 @@ const ManageUsers = () => {
   const [editedUserData, setEditedUserData] = useState(null);
   const [searchText, setSearchText] = useState("");
 
+  // fetch users' data from Firestore
   useEffect(() => {
     const getUsers = async () => {
       console.log("Fetching users..."); // Debug statement
       try {
+        // create a collection reference
         const usersCollection = collection(firestore, "users");
+        // retrieve all the documents
         const usersSnapshot = await getDocs(usersCollection);
+        // transform the usersSnapshot into an array of usersData objects
         const usersData = usersSnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
@@ -45,6 +49,7 @@ const ManageUsers = () => {
 
   const handleDeleteUser = async (userId) => {
     try {
+      // create a document reference
       const userRef = doc(firestore, "users", userId);
       await deleteDoc(userRef);
       console.log("User deleted successfully!");
@@ -67,7 +72,9 @@ const ManageUsers = () => {
 
   const handleUpdateUser = async (userId) => {
     try {
+      // create a document reference
       const userRef = doc(firestore, "users", userId);
+      // update the document
       await updateDoc(userRef, editedUserData);
       console.log("User updated successfully!");
       // Refresh the users list after updating the user
@@ -112,10 +119,12 @@ const ManageUsers = () => {
     setSearchText(event.target.value);
   };
 
+  // filter an array of users based on a searchText value
   const filteredUsers = users.filter((user) =>
     user.username.toLowerCase().includes(searchText.toLowerCase())
   );
 
+  // define an array of columns that can be used for displaying data in a table
   const columns = [
     {
       name: "Username",

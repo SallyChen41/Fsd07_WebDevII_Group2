@@ -3,9 +3,12 @@ import { firestore } from "../../config/firebase";
 import {
   collection,
   getDocs,
+  getDoc,
   addDoc,
   deleteDoc,
   doc,
+  query,
+  where,
 } from "firebase/firestore";
 import "bootstrap/dist/css/bootstrap.min.css";
 import DataTable from "react-data-table-component";
@@ -23,12 +26,23 @@ const ManageCategories = () => {
     const getCategories = async () => {
       console.log("Fetching categories..."); // Debug statement
       try {
+        // create a collection reference
         const categoriesCollection = collection(firestore, "categories");
+        // retrieve all the documents
         const categoriesSnapshot = await getDocs(categoriesCollection);
-        const categoriesData = categoriesSnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
+        // process the categoriesSnapshot.docs array asynchronously
+        const categoriesData = await Promise.all(
+          categoriesSnapshot.docs.map(async (doc) => {
+            const categoryData = {
+              id: doc.id,
+              ...doc.data(),
+            };
+            categoryData.hasRelatedItems = await hasRelatedItems(
+              categoryData.name
+            );
+            return categoryData;
+          })
+        );
         setCategories(categoriesData);
         setLoading(false);
       } catch (error) {
@@ -42,20 +56,28 @@ const ManageCategories = () => {
 
   const handleAddCategory = async () => {
     try {
+      // create a collection reference
       const categoriesCollection = collection(firestore, "categories");
+      // create a new object, contains the name property
       const newCategory = {
         name: newCategoryName,
       };
-      await addDoc(categoriesCollection, newCategory);
+      // add a new document
+      const docRef = await addDoc(categoriesCollection, newCategory);
       console.log("Category added successfully!");
       setNewCategoryName("");
       // Refresh the categories list after adding a new category
-      const categoriesSnapshot = await getDocs(categoriesCollection);
-      const categoriesData = categoriesSnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setCategories(categoriesData);
+      // create a new document reference
+      const newCategoryRef = doc(categoriesCollection, docRef.id);
+      // retrieve the document
+      const newCategoryDoc = await getDoc(newCategoryRef);
+      const newCategoryData = {
+        id: newCategoryDoc.id,
+        ...newCategoryDoc.data(),
+        // check if there are any related items based on the category name
+        hasRelatedItems: await hasRelatedItems(newCategoryDoc.data().name),
+      };
+      setCategories([...categories, newCategoryData]);
     } catch (error) {
       console.log("Error adding category:", error.message);
       setError(error.message);
@@ -66,17 +88,15 @@ const ManageCategories = () => {
 
   const handleDeleteCategory = async (categoryId) => {
     try {
+      // create a document reference
       const categoryRef = doc(firestore, "categories", categoryId);
       await deleteDoc(categoryRef);
       console.log("Category deleted successfully!");
-      // Refresh the categories list after deleting the category
-      const categoriesCollection = collection(firestore, "categories");
-      const categoriesSnapshot = await getDocs(categoriesCollection);
-      const categoriesData = categoriesSnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setCategories(categoriesData);
+      // Filter out the deleted category from the categories state
+      const updatedCategories = categories.filter(
+        (category) => category.id !== categoryId
+      );
+      setCategories(updatedCategories);
     } catch (error) {
       console.log("Error deleting category:", error.message);
       setError(error.message);
@@ -104,6 +124,7 @@ const ManageCategories = () => {
         <button
           className="btn btn-danger"
           onClick={() => openDeleteModal(row.id)}
+          disabled={row.hasRelatedItems}
         >
           Delete
         </button>
@@ -111,6 +132,23 @@ const ManageCategories = () => {
       sortable: false,
     },
   ];
+
+  // check if there are any related items in a collection based on a specific category
+  const hasRelatedItems = async (categoryName) => {
+    try {
+      const itemsCollection = collection(firestore, "items");
+      // filter the items based on their "category" field
+      const querySnapshot = await getDocs(
+        query(itemsCollection, where("category", "==", categoryName))
+      );
+
+      return querySnapshot.size > 0;
+    } catch (error) {
+      console.log("Error checking related items:", error.message);
+      setError(error.message);
+      return false;
+    }
+  };
 
   if (loading) {
     return <div>Loading...</div>;
