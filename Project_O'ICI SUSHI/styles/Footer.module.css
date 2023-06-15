@@ -12,12 +12,6 @@
   padding: 3% 3%;
 }
 
-/* .item:last-child {
-  flex: 2;
-  padding: 50px;
-  justify-content: space-between;
-} */
-
 .card {
   flex: 1;
   padding: 0 20px;
@@ -28,13 +22,10 @@
   color: #b7903c;
 }
 
-/* .text {
-  color: lightgray;
-} */
-
 .icon {
-  font-size: 10px;
-  /* color: lightgray; */
+  font-size: 2em;
+  margin-right: 0.3em;
+  color: #666;
 }
 
 @media screen and (max-width: 480px) {
