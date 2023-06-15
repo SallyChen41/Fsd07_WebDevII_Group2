@@ -4,7 +4,8 @@ const initialState = {
   items: [],
 };
 
-export const cartContext = createContext();
+// Create a context for the cart
+export const cartContext = createContext(); 
 
 const cartReducer = (state, action) => {
   switch (action.type) {
@@ -15,26 +16,31 @@ const cartReducer = (state, action) => {
       };
     case 'ADD_ITEM':
       const addedItems = [...state.items, action.payload];
-      localStorage.setItem('cartItems', JSON.stringify(addedItems));
+      // Store cart items in local storage
+      localStorage.setItem('cartItems', JSON.stringify(addedItems)); 
       return {
         ...state,
         items: addedItems,
       };
     case 'UPDATE_QUANTITY':
-      const updatedItems = state.items.map(item => {
+      const updatedItems = state.items.map((item) => {
         if (item.id === action.payload.id) {
-          return { ...item, quantity: action.payload.quantity };
+          // Update quantity of a specific item
+          return { ...item, quantity: action.payload.quantity }; 
         }
         return item;
       });
-      localStorage.setItem('cartItems', JSON.stringify(updatedItems));
+      // Update cart items in local storage
+      localStorage.setItem('cartItems', JSON.stringify(updatedItems)); 
       return {
         ...state,
         items: updatedItems,
       };
     case 'REMOVE_ITEM':
-      const removedItems = state.items.filter(item => item.id !== action.payload);
-      localStorage.setItem('cartItems', JSON.stringify(removedItems));
+      // Remove an item from the cart
+      const removedItems = state.items.filter((item) => item.id !== action.payload); 
+      // Update cart items in local storage
+      localStorage.setItem('cartItems', JSON.stringify(removedItems)); 
       return {
         ...state,
         items: removedItems,
@@ -45,18 +51,21 @@ const cartReducer = (state, action) => {
 };
 
 export const CartProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(cartReducer, initialState);
-  const [userId, setUserId] = useState(null);
+  // Use reducer to manage cart state
+  const [state, dispatch] = useReducer(cartReducer, initialState); 
+  // State to store user ID
+  const [userId, setUserId] = useState(null); 
 
   useEffect(() => {
     const storedItems = localStorage.getItem(`cartItems_${userId}`);
     if (storedItems) {
-      dispatch({ type: 'SET_ITEMS', payload: JSON.parse(storedItems) });
+      // Initialize cart items from local storage
+      dispatch({ type: 'SET_ITEMS', payload: JSON.parse(storedItems) }); 
     }
   }, [userId]);
 
   const addItemToCart = (item) => {
-    dispatch({ type: 'ADD_ITEM', payload: item });
+    dispatch({ type: 'ADD_ITEM', payload: item }); 
   };
 
   const updateItemQuantity = (itemId, quantity) => {
@@ -68,19 +77,21 @@ export const CartProvider = ({ children }) => {
   };
 
   const logout = () => {
-    localStorage.removeItem(`cartItems_${userId}`);
+    // Remove cart items from local storage on logout
+    localStorage.removeItem(`cartItems_${userId}`); 
     setUserId(null);
-    window.location.href = '/';
+    // Redirect to the homepage
+    window.location.href = '/'; 
   };
 
   const setUser = (id) => {
-    setUserId(id);
+    setUserId(id); // Set the user ID
   };
 
   return (
-    <cartContext.Provider 
-      value={{ 
-        cart: state, 
+    <cartContext.Provider
+      value={{
+        cart: state,
         addItemToCart,
         updateItemQuantity,
         removeItemFromCart,

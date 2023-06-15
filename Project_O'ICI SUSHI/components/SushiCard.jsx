@@ -6,6 +6,7 @@ import Link from 'next/link';
 const SushiCard = ({ id, itemName, description, price, image }) => {
   return (
     <div className={styles.container}>
+      {/* retrieve [id].jsx page */}
       <Link href={`/item/${id}`}>
         <a>
           <Image src={image} alt={itemName} width={200} height={200} />

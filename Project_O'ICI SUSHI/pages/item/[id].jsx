@@ -22,18 +22,21 @@ const Item = () => {
       try {
         const itemsCollection = collection(firestore, 'items');
         const categoriesCollection = collection(firestore, 'categories');
-  
+
+        // Fetch items and categories from Firestore
         const [itemsSnapshot, categoriesSnapshot] = await Promise.all([
           getDocs(itemsCollection),
           getDocs(categoriesCollection),
         ]);
   
+        // Create a map of category names to category IDs
         const categoriesMap = categoriesSnapshot.docs.reduce((map, doc) => {
           const category = doc.data();
           map[category.name] = doc.id;
           return map;
         }, {});
   
+        // Process items data and categorize them by category
         const itemsData = itemsSnapshot.docs.map((doc) => {
           const itemData = doc.data();
           const categoryId = categoriesMap[itemData.category];
@@ -47,6 +50,7 @@ const Item = () => {
           };
         });
   
+        // Create an array of menu items with their respective categories and items
         const menuItems = categoriesSnapshot.docs.map((doc) => {
           const category = doc.data();
           const categoryId = doc.id;
@@ -94,6 +98,7 @@ const Item = () => {
   };
 
   const handleAddToCart = () => {
+    // Create an object representing the selected sushi item with its details
     const selectedSushi = {
       id: sushi.id,
       img: sushi.image,
@@ -102,7 +107,9 @@ const Item = () => {
       extras: extras,
       quantity: quantity,
     };
+    // Add the selected sushi item to the cart
     addItemToCart(selectedSushi);
+    // Set the item added state to show a notification
     setIsItemAdded(true);
     setTimeout(() => setIsItemAdded(false), 1000); // Reset the added item animation after 1 second
   };
