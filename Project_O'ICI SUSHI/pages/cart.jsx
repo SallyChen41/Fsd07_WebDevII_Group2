@@ -119,6 +119,7 @@ const Cart = () => {
                   const updatedOrderData = {
                     ...orderData,
                     id: orderId,
+                    items: [...cart.items],
                     userId: userId,
                     paymentTime: new Date().toISOString(),
                   };

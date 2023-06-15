@@ -65,6 +65,18 @@ const Order = () => {
                     <span className={styles.address}>{order.method}</span>
                   </td>
                   <td>
+                    <span className={styles.address}>
+                      {new Date(order.paymentTime).toLocaleString("en-US", {
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        second: "2-digit",
+                      })}
+                    </span>
+                  </td>
+                  <td>
                     {order.total ? (
                       <span className={styles.total}>
                         ${order.total.toFixed(2)}
